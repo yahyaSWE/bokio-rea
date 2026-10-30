@@ -46,6 +46,8 @@ med eget namn, egen design och egen kod.
   skickas eller vidarebefordras. Bilagor (och mejl utan bilaga, som text) hamnar i Uppladdat, läses av med AI och bokförs
   automatiskt när bankraden matchas. Tillåtna avsändare, dubblettkontroll, dygnsgräns och Gmails bekräftelse av
   vidarebefordran visas i appen. Kräver `INBOUND_ADDRESS` och `INBOUND_WEBHOOK_SECRET` (se Inställningar → Kvitton via e-post).
+- **Radera företag**: ägaren kan ta bort ett företag permanent (Inställningar → Företag) genom att skriva dess namn, med
+  påminnelse om bokföringslagens krav på att spara räkenskapsinformation i sju år. Kontot och andra företag påverkas inte.
 - **Utseende**: ljust, mörkt eller automatiskt tema per användare.
 - **Räkenskapsår och moms**: företagsform, faktura-/kontantmetoden, moms per månad/kvartal/helår (eller ej momsregistrerad),
   brutet/förlängt räkenskapsår och deadlines enligt Skatteverket.

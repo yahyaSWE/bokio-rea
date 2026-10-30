@@ -3,6 +3,8 @@ import { requireCompany } from "@/lib/auth";
 import { COMPANY_TYPES } from "@/lib/company-setup";
 import { Card, Flash, PageHeader, readParams, type SP } from "@/components/ui";
 import { ConfirmButton } from "@/components/ConfirmButton";
+import { DeleteCompany } from "@/components/DeleteCompany";
+import { companyContents } from "@/lib/company-delete";
 import { saveCompany } from "../registers/actions";
 
 type Field = { name: string; label: string; hint?: string; required?: boolean; type?: string; wide?: boolean };
@@ -26,7 +28,8 @@ const CONTACT: Field[] = [
 
 export default async function Settings({ searchParams }: { searchParams: SP }) {
   const { error, notice } = await readParams(searchParams);
-  const { company: c } = await requireCompany();
+  const { company: c, companyId, role } = await requireCompany();
+  const contents = role === "owner" ? await companyContents(companyId) : null;
   const value = (k: string) => String(c[k as keyof typeof c] ?? "");
   const input = (f: Field) => (
     <div key={f.name} className={f.wide ? "sm:col-span-2" : ""}>
@@ -94,6 +97,27 @@ export default async function Settings({ searchParams }: { searchParams: SP }) {
           </Card>
         </div>
       </form>
+
+      {contents && (
+        <Card title="Radera företaget" className="mt-6 max-w-5xl">
+          <div className="grid gap-6 px-5 pb-5 pt-1 text-[14px] lg:grid-cols-2">
+            <div className="space-y-3">
+              <p>
+                Tar permanent bort {c.name} och allt som hör till det: {contents.verifications} verifikat, {contents.invoices} utfärdade fakturor, {contents.customers} kunder och {contents.uploads} underlag.
+                {contents.users > 1 && ` ${contents.users - 1} andra användare förlorar tillgången.`} Det går inte att ångra. Ditt konto och dina andra företag påverkas inte.
+              </p>
+              {contents.verifications + contents.invoices > 0 && (
+                <p className="rounded-xl bg-warn-soft p-3 text-warn">
+                  Riktig bokföring ska sparas i sju år enligt bokföringslagen, så radera bara testdata eller bokföring du har en kopia av.{" "}
+                  <Link href="/settings/import-export" className="font-semibold underline">Ladda ner SIE-fil</Link> och{" "}
+                  <a href="/api/invoices/export" className="font-semibold underline">fakturaregister</a> först.
+                </p>
+              )}
+            </div>
+            <DeleteCompany id={companyId} name={c.name} />
+          </div>
+        </Card>
+      )}
     </>
   );
 }

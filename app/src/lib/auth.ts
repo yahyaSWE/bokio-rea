@@ -109,9 +109,9 @@ export async function requireWriter() {
 }
 
 /** Bara ägare får hantera användare och behörigheter. */
-export async function requireOwner() {
+export async function requireOwner(message = "Bara företagets ägare kan hantera användare.") {
   const c = await requireCompany();
-  if (c.role !== "owner") await back("Bara företagets ägare kan hantera användare.");
+  if (c.role !== "owner") await back(message);
   return c;
 }
 

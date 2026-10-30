@@ -3,7 +3,8 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
-import { requireWriter } from "@/lib/auth";
+import { requireOwner, requireWriter } from "@/lib/auth";
+import { deleteCompany } from "@/lib/company-delete";
 import { validOrgNumber } from "@/lib/company-setup";
 import { MAX_REMINDER_FEE, formatVatNumber, validSwedishVatNumber, validVatNumberFormat, vatMatchesOrg } from "@/lib/invoice-rules";
 import { str, withParam } from "@/lib/action";
@@ -158,4 +159,17 @@ export async function deleteTemplate(fd: FormData) {
   const { companyId } = await requireWriter();
   await db.template.deleteMany({ where: { id: Number(str(fd, "id")), companyId } });
   done("/settings/templates", "Mallen är borttagen.");
+}
+
+/** Raderar det aktiva företaget permanent. Bara ägare, och företagets namn måste skrivas in exakt. */
+export async function deleteCompanyAction(fd: FormData) {
+  const { companyId, company, user } = await requireOwner("Bara företagets ägare kan radera företaget.");
+  // Företaget på sidan måste vara det aktiva, om man hunnit byta företag i en annan flik.
+  if (Number(str(fd, "companyId")) !== companyId || str(fd, "confirmName") !== company.name.trim()) {
+    redirect(withParam("/settings", "error", "Namnet stämmer inte. Inget har raderats."));
+  }
+  await deleteCompany(companyId);
+  revalidatePath("/", "layout");
+  const remaining = await db.membership.count({ where: { userId: user.id } });
+  redirect(remaining ? withParam("/", "ok", `${company.name} är raderat.`) : "/companies/new");
 }
