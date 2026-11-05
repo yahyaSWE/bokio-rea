@@ -11,9 +11,9 @@ export default async function Login({ searchParams }: { searchParams: SP }) {
   const { get, error, notice } = await readParams(searchParams);
   return (
     <>
-      <h1 className="mb-1 text-center text-[28px] font-semibold tracking-[-0.02em]">Logga in</h1>
-      <p className="mb-7 text-center text-[15px] text-muted">
-        Inget konto? <Link href="/register" className="text-brand">Registrera ditt företag</Link>
+      <h1 className="mb-1 text-[22px] font-semibold tracking-[-0.02em]">Logga in</h1>
+      <p className="mb-6 text-[14px] text-muted">
+        Inget konto? <Link href="/register" className="font-medium text-ink underline decoration-[var(--line-strong)] underline-offset-4 hover:decoration-current">Registrera ditt företag</Link>
       </p>
       <Flash error={error} notice={get("expired") ? `Du loggades ut efter ${IDLE_MINUTES} minuter utan aktivitet. Logga in igen.` : notice} />
       <form action={login} className="space-y-4">

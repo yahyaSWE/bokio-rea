@@ -86,7 +86,7 @@ export function Sidebar({ company, companies, userName, readOnly = false }: { co
     <>
       {/* Mobil: genomskinlig toppmeny */}
       <header className="no-print sticky top-0 z-30 flex h-12 items-center justify-between border-b border-[var(--sidebar-border)] bg-[var(--sidebar)] px-4 backdrop-blur-xl backdrop-saturate-150 md:hidden">
-        <button onClick={() => setOpen(!open)} className="flex items-center gap-1.5 text-[15px] font-medium text-brand" aria-expanded={open}>
+        <button onClick={() => setOpen(!open)} className="flex items-center gap-1.5 text-[15px] font-medium text-ink" aria-expanded={open}>
           <Icon name="sidebar" className="h-5 w-5" />
           Meny
         </button>
@@ -100,11 +100,9 @@ export function Sidebar({ company, companies, userName, readOnly = false }: { co
         className={`no-print fixed inset-y-0 left-0 z-40 flex w-64 shrink-0 flex-col border-r border-[var(--sidebar-border)] bg-[var(--sidebar)] backdrop-blur-2xl backdrop-saturate-150 transition-transform duration-300 ease-out md:sticky md:top-0 md:z-auto md:h-screen md:translate-x-0 ${open ? "translate-x-0 shadow-2xl" : "-translate-x-full"}`}
       >
         <div className="px-4 pb-3 pt-5">
-          <Link href="/" className="mb-4 flex items-center gap-2.5 px-1">
-            <span className="grid h-8 w-8 place-items-center rounded-[9px] bg-gradient-to-br from-[#2b90ff] to-[#0058d1] text-white shadow-sm">
-              <Icon name="book" className="h-[18px] w-[18px]" />
-            </span>
-            <span className="text-[17px] font-semibold tracking-[-0.02em]">Huvudbok</span>
+          <Link href="/" className="mb-4 flex items-center gap-2.5 px-1.5">
+            <span className="grid h-7 w-7 place-items-center rounded-md bg-primary font-mono text-[13px] font-semibold text-primary-ink">H</span>
+            <span className="text-[15px] font-semibold tracking-[-0.02em]">Huvudbok</span>
           </Link>
           <form action={switchCompany}>
             <label className="sr-only" htmlFor="company-switch">Företag</label>
@@ -117,7 +115,7 @@ export function Sidebar({ company, companies, userName, readOnly = false }: { co
                 if (e.target.value === "new") window.location.href = "/companies/new";
                 else e.target.form?.requestSubmit();
               }}
-              className="input bg-fill py-1.5 text-[13px] font-medium"
+              className="input py-1.5 text-[13px] font-medium"
             >
               {companies.map((c) => (
                 <option key={c.id} value={c.id}>{c.name}</option>
@@ -127,10 +125,10 @@ export function Sidebar({ company, companies, userName, readOnly = false }: { co
           </form>
         </div>
 
-        <nav className="flex-1 space-y-5 overflow-y-auto px-3 pb-4">
+        <nav className="flex-1 space-y-4 overflow-y-auto px-3 pb-4">
           {NAV.map((group, i) => (
             <div key={i}>
-              {group.title && <p className="mb-1 px-2.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-muted/80">{group.title}</p>}
+              {group.title && <p className="mb-1 px-2.5 text-[12px] font-medium text-muted">{group.title}</p>}
               <ul className="space-y-px">
                 {group.items.filter(([href]) => !(readOnly && WRITE_ONLY.has(href))).map(([href, label, icon]) => {
                   const on = active === href;
@@ -142,9 +140,9 @@ export function Sidebar({ company, companies, userName, readOnly = false }: { co
                         onClick={(e) => {
                           if (!e.metaKey && !e.ctrlKey && href !== activeHref(path)) setPending(href);
                         }}
-                        className={`flex items-center gap-2.5 rounded-lg px-2.5 py-[7px] text-[14px] transition-colors ${on ? "bg-brand text-white" : "text-ink hover:bg-fill"}`}
+                        className={`flex items-center gap-2.5 rounded-md px-2.5 py-[6px] text-[14px] transition-colors ${on ? "bg-surface font-medium text-ink shadow-[var(--shadow-raised)]" : "text-ink/75 hover:bg-fill hover:text-ink"}`}
                       >
-                        <Icon name={icon} className={`h-[18px] w-[18px] shrink-0 ${on ? "text-white" : "text-brand"}`} />
+                        <Icon name={icon} className={`h-[17px] w-[17px] shrink-0 ${on ? "text-brand" : "text-muted"}`} />
                         {label}
                       </Link>
                     </li>
@@ -156,13 +154,13 @@ export function Sidebar({ company, companies, userName, readOnly = false }: { co
         </nav>
 
         <div className="flex items-center gap-2.5 border-t border-line px-4 py-3">
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#a1a1a6] to-[#6e6e73] text-[13px] font-semibold text-white">
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-fill text-[13px] font-semibold text-ink">
             {userName.trim().charAt(0).toUpperCase() || "?"}
           </span>
           <div className="min-w-0 flex-1">
             <p className="truncate text-[13px] font-medium">{userName}</p>
             <form action={logout}>
-              <button className="text-[12px] text-brand hover:underline">Logga ut</button>
+              <button className="text-[12px] text-muted hover:text-ink">Logga ut</button>
             </form>
           </div>
         </div>

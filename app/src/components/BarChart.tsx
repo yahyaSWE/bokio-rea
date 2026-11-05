@@ -37,10 +37,10 @@ export function BarChart({
           const cx = pad.l + slot * i + slot / 2;
           return (
             <g key={i}>
-              <rect x={cx - bw - 1} y={y(d.a)} width={bw} height={pad.t + ih - y(d.a)} rx="3" fill="var(--brand)">
+              <rect x={cx - bw - 1} y={y(d.a)} width={bw} height={pad.t + ih - y(d.a)} rx="2" fill="var(--ink)">
                 <title>{`${d.label}: ${aLabel} ${fmt.format(d.a)} kr`}</title>
               </rect>
-              <rect x={cx + 1} y={y(d.b)} width={bw} height={pad.t + ih - y(d.b)} rx="3" fill="var(--chart-2)">
+              <rect x={cx + 1} y={y(d.b)} width={bw} height={pad.t + ih - y(d.b)} rx="2" fill="var(--chart-2)">
                 <title>{`${d.label}: ${bLabel} ${fmt.format(d.b)} kr`}</title>
               </rect>
               <text x={cx} y={H - 6} textAnchor="middle" fontSize="11" fill="var(--muted)">
@@ -51,8 +51,8 @@ export function BarChart({
         })}
       </svg>
       <div className="mt-2 flex gap-4 text-xs text-muted">
-        <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-full bg-brand" />{aLabel}</span>
-        <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-full" style={{ background: "var(--chart-2)" }} />{bLabel}</span>
+        <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-sm bg-ink" />{aLabel}</span>
+        <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-sm" style={{ background: "var(--chart-2)" }} />{bLabel}</span>
       </div>
     </div>
   );

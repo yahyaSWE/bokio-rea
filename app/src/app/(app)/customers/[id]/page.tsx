@@ -78,7 +78,7 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
         }
       />
 
-      <div className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="stat-group mb-6 grid sm:grid-cols-2 xl:grid-cols-4">
         <Stat label="Fakturor" value={String(issued.filter((i) => i.kind !== "credit").length)} hint={invoices.length > issued.length ? `+ ${invoices.length - issued.length} utkast` : undefined} />
         <Stat label="Fakturerat (inkl. moms)" value={kr(sum(issued.filter((i) => i.status !== "credited" && i.kind !== "credit")))} />
         <Stat label="Obetalt" value={kr(sum(unpaid))} tone={unpaid.length ? "warn" : undefined} hint={unpaid.length ? `${unpaid.length} ${unpaid.length === 1 ? "faktura" : "fakturor"}` : "Inget obetalt"} />

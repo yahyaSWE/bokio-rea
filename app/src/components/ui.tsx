@@ -5,8 +5,8 @@ export function PageHeader({ title, subtitle, actions }: { title: string; subtit
   return (
     <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
       <div className="min-w-0">
-        <h1 className="text-[28px] font-semibold leading-tight tracking-[-0.025em] sm:text-[34px]">{title}</h1>
-        {subtitle && <p className="mt-1 text-[15px] text-muted">{subtitle}</p>}
+        <h1 className="text-[24px] font-semibold leading-tight tracking-[-0.025em] sm:text-[28px]">{title}</h1>
+        {subtitle && <p className="mt-1 text-[14px] text-muted">{subtitle}</p>}
       </div>
       {actions && <div className="no-print flex flex-wrap items-center gap-2">{actions}</div>}
     </div>
@@ -27,8 +27,8 @@ export function Card({
   return (
     <section className={`card overflow-hidden ${className}`}>
       {title && (
-        <div className="flex items-center justify-between gap-3 px-5 pb-2 pt-4">
-          <h2 className="text-[17px] font-semibold tracking-[-0.01em]">{title}</h2>
+        <div className="flex min-h-12 items-center justify-between gap-3 border-b border-line px-5 py-3">
+          <h2 className="text-[14px] font-semibold tracking-[-0.01em]">{title}</h2>
           {action}
         </div>
       )}
@@ -38,12 +38,17 @@ export function Card({
 }
 
 export function Stat({ label, value, hint, tone }: { label: string; value: string; hint?: string; tone?: "danger" | "warn" | "brand" | "success" }) {
-  const color = tone ? { danger: "text-danger", warn: "text-warn", brand: "text-brand", success: "text-success" }[tone] : "";
+  // Färg används sparsamt: bara röda belopp när något är fel, övriga signaler som en prick vid etiketten.
+  // Placeras i en .stat-group (sammanhållen panel med hårfina linjer mellan nyckeltalen).
+  const dot = tone ? { danger: "bg-danger", warn: "bg-warn", brand: "bg-brand", success: "bg-success" }[tone] : "";
   return (
-    <div className="card p-5">
-      <p className="text-[13px] font-medium text-muted">{label}</p>
-      <p className={`mt-1.5 text-[26px] font-semibold tabular-nums leading-tight tracking-[-0.02em] ${color}`}>{value}</p>
-      {hint && <p className="mt-1 text-[13px] text-muted">{hint}</p>}
+    <div className="bg-surface px-5 py-4">
+      <p className="flex items-center gap-2 text-[13px] text-muted">
+        {dot && <i aria-hidden className={`h-1.5 w-1.5 rounded-full ${dot}`} />}
+        {label}
+      </p>
+      <p className={`mt-2 text-[24px] font-medium tabular-nums leading-tight tracking-[-0.03em] ${tone === "danger" ? "text-danger" : ""}`}>{value}</p>
+      {hint && <p className={`mt-1 text-[13px] ${tone === "warn" ? "text-warn" : "text-muted"}`}>{hint}</p>}
     </div>
   );
 }
@@ -66,7 +71,7 @@ const BADGE: Record<string, [string, string]> = {
 
 export function Badge({ status }: { status: string }) {
   const [label, cls] = BADGE[status] ?? [status, "bg-fill text-muted"];
-  return <span className={`inline-block whitespace-nowrap rounded-full px-2.5 py-0.5 text-[12px] font-semibold ${cls}`}>{label}</span>;
+  return <span className={`inline-block whitespace-nowrap rounded-md px-2 py-0.5 text-[12px] font-medium ${cls}`}>{label}</span>;
 }
 
 export function Flash({ error, notice }: { error?: string; notice?: string }) {
@@ -74,7 +79,7 @@ export function Flash({ error, notice }: { error?: string; notice?: string }) {
   return (
     <div
       role={error ? "alert" : "status"}
-      className={`mb-6 flex items-start gap-3 rounded-2xl px-4 py-3 text-[14px] ${error ? "bg-danger-soft text-danger" : "bg-success-soft text-success"}`}
+      className={`mb-6 flex items-start gap-3 rounded-lg px-4 py-3 text-[14px] ${error ? "bg-danger-soft text-danger" : "bg-success-soft text-success"}`}
     >
       <span aria-hidden className="mt-px font-bold">{error ? "!" : "✓"}</span>
       <span className="font-medium">{error ?? notice}</span>
@@ -88,7 +93,7 @@ export function Money({ ore, className = "" }: { ore: number; className?: string
 
 export function Empty({ children, href, cta }: { children: React.ReactNode; href?: string; cta?: string }) {
   return (
-    <div className="px-5 py-12 text-center text-[15px] text-muted">
+    <div className="px-5 py-12 text-center text-[14px] text-muted">
       <p>{children}</p>
       {href && (
         <Link href={href} className="btn-primary mt-4">

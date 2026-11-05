@@ -1,95 +1,102 @@
 @import "tailwindcss";
 
-/* Designsystem inspirerat av Apples plattformar: systemtypsnitt, mjuka ytor, få linjer och tydlig hierarki. */
+/* Designsystem: varmt papper, bläcksvart text, hårfina linjer och en enda accentfärg. Ytor skiljs åt med kanter, inte skuggor. */
 :root {
   color-scheme: light;
-  /* Ljust tema: ljus blågrå bakgrund med ett svagt blått sken upptill; vita kort avgränsas med kant och mjuk skugga. */
-  --bg: #f8fafc;
-  --bg-glow: radial-gradient(ellipse at 50% 0%, rgba(59, 130, 246, 0.075), transparent 55%);
+  --bg: #f6f6f3;
+  --bg-glow: none;
   --surface: #ffffff;
-  --surface-2: #f3f6fa; /* fält, segmentkontroller */
-  --fill: rgba(100, 116, 139, 0.12); /* sekundära knappar */
-  --fill-hover: rgba(100, 116, 139, 0.2);
-  --ink: #0f172a;
-  --muted: #5b6577; /* 5,8:1 mot vitt, 5,5:1 mot bakgrunden */
-  --line: #e9edf3;
-  --line-strong: #cbd3df; /* streckade ytor */
-  --input-border: #d5dce6;
-  --card-border: #e9edf3;
-  --brand: #0071e3;
+  --surface-2: #f4f4f1; /* hover, segmentkontroller */
+  --fill: rgba(25, 25, 23, 0.06); /* sekundära ytor */
+  --fill-hover: rgba(25, 25, 23, 0.1);
+  --ink: #1a1a18;
+  --muted: #6b6a64; /* 5,3:1 mot vitt */
+  --line: #ebeae6;
+  --line-strong: #cfcdc6; /* streckade ytor */
+  --input-border: #dcdbd5;
+  --card-border: #e4e3de;
+  --brand: #3149c9;
   --brand-ink: #ffffff;
-  --brand-soft: rgba(0, 113, 227, 0.1);
-  --success: #248a3d;
-  --success-soft: rgba(52, 199, 89, 0.14);
-  --danger: #d70015;
-  --danger-soft: rgba(255, 59, 48, 0.12);
-  --warn: #b25000;
-  --warn-soft: rgba(255, 149, 0, 0.14);
-  --chart-2: #ff9f0a;
-  --sidebar: #ffffff;
-  --sidebar-border: #e9edf3;
-  --shadow: 0 2px 5px rgba(15, 23, 42, 0.025), 0 12px 28px rgba(15, 23, 42, 0.035);
-  --shadow-raised: 0 1px 3px rgba(0, 0, 0, 0.14), 0 1px 1px rgba(0, 0, 0, 0.06);
+  --brand-soft: rgba(49, 73, 201, 0.08);
+  --primary: #1a1a18; /* huvudknappar */
+  --primary-ink: #fafaf8;
+  --success: #1d7a46;
+  --success-soft: rgba(29, 122, 70, 0.1);
+  --danger: #c0281e;
+  --danger-soft: rgba(192, 40, 30, 0.08);
+  --warn: #9a5800;
+  --warn-soft: rgba(196, 120, 0, 0.11);
+  --chart-2: #d9a066;
+  --sidebar: #f6f6f3;
+  --sidebar-border: #e4e3de;
+  --shadow: 0 1px 2px rgba(25, 25, 23, 0.04);
+  --shadow-raised: 0 1px 2px rgba(25, 25, 23, 0.1), 0 0 0 1px rgba(25, 25, 23, 0.06);
 }
 
 /* Mörkt tema: valt av användaren (data-theme="dark") eller följer systemet (ingen data-theme). */
 :root[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #000000;
-  --surface: #1c1c1e;
-  --surface-2: #2c2c2e;
-  --fill: rgba(120, 120, 128, 0.24);
-  --fill-hover: rgba(120, 120, 128, 0.34);
-  --ink: #f5f5f7;
-  --muted: #98989d;
-  --line: rgba(255, 255, 255, 0.1);
-  --line-strong: rgba(255, 255, 255, 0.22);
-  --input-border: rgba(255, 255, 255, 0.12);
-  --card-border: rgba(255, 255, 255, 0.07);
-  --brand: #0a84ff;
-  --brand-soft: rgba(10, 132, 255, 0.18);
-  --success: #30d158;
-  --success-soft: rgba(48, 209, 88, 0.18);
-  --danger: #ff453a;
-  --danger-soft: rgba(255, 69, 58, 0.18);
-  --warn: #ff9f0a;
-  --warn-soft: rgba(255, 159, 10, 0.18);
-  --chart-2: #ffd60a;
-  --sidebar: rgba(28, 28, 30, 0.72);
-  --sidebar-border: rgba(255, 255, 255, 0.1);
-  --bg-glow: radial-gradient(ellipse at 50% 0%, rgba(10, 132, 255, 0.09), transparent 55%);
-  --shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
-  --shadow-raised: 0 1px 3px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+    --bg: #0e0e0d;
+    --bg-glow: none;
+    --surface: #171716;
+    --surface-2: #1e1e1c;
+    --fill: rgba(255, 255, 255, 0.07);
+    --fill-hover: rgba(255, 255, 255, 0.11);
+    --ink: #ecebe7;
+    --muted: #9b9a93;
+    --line: rgba(255, 255, 255, 0.08);
+    --line-strong: rgba(255, 255, 255, 0.2);
+    --input-border: rgba(255, 255, 255, 0.12);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --brand: #8a9cff;
+    --brand-ink: #0e0e0d;
+    --brand-soft: rgba(138, 156, 255, 0.14);
+    --primary: #ecebe7;
+    --primary-ink: #0e0e0d;
+    --success: #4cc282;
+    --success-soft: rgba(76, 194, 130, 0.14);
+    --danger: #ff6b5e;
+    --danger-soft: rgba(255, 107, 94, 0.14);
+    --warn: #f0a640;
+    --warn-soft: rgba(240, 166, 64, 0.14);
+    --chart-2: #b5835a;
+    --sidebar: #0e0e0d;
+    --sidebar-border: rgba(255, 255, 255, 0.08);
+    --shadow: none;
+    --shadow-raised: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #000000;
-    --surface: #1c1c1e;
-    --surface-2: #2c2c2e;
-    --fill: rgba(120, 120, 128, 0.24);
-    --fill-hover: rgba(120, 120, 128, 0.34);
-    --ink: #f5f5f7;
-    --muted: #98989d;
-    --line: rgba(255, 255, 255, 0.1);
-    --line-strong: rgba(255, 255, 255, 0.22);
+    --bg: #0e0e0d;
+    --bg-glow: none;
+    --surface: #171716;
+    --surface-2: #1e1e1c;
+    --fill: rgba(255, 255, 255, 0.07);
+    --fill-hover: rgba(255, 255, 255, 0.11);
+    --ink: #ecebe7;
+    --muted: #9b9a93;
+    --line: rgba(255, 255, 255, 0.08);
+    --line-strong: rgba(255, 255, 255, 0.2);
     --input-border: rgba(255, 255, 255, 0.12);
-    --card-border: rgba(255, 255, 255, 0.07);
-    --brand: #0a84ff;
-    --brand-soft: rgba(10, 132, 255, 0.18);
-    --success: #30d158;
-    --success-soft: rgba(48, 209, 88, 0.18);
-    --danger: #ff453a;
-    --danger-soft: rgba(255, 69, 58, 0.18);
-    --warn: #ff9f0a;
-    --warn-soft: rgba(255, 159, 10, 0.18);
-    --chart-2: #ffd60a;
-    --sidebar: rgba(28, 28, 30, 0.72);
-  --sidebar-border: rgba(255, 255, 255, 0.1);
-  --bg-glow: radial-gradient(ellipse at 50% 0%, rgba(10, 132, 255, 0.09), transparent 55%);
-    --shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
-    --shadow-raised: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --brand: #8a9cff;
+    --brand-ink: #0e0e0d;
+    --brand-soft: rgba(138, 156, 255, 0.14);
+    --primary: #ecebe7;
+    --primary-ink: #0e0e0d;
+    --success: #4cc282;
+    --success-soft: rgba(76, 194, 130, 0.14);
+    --danger: #ff6b5e;
+    --danger-soft: rgba(255, 107, 94, 0.14);
+    --warn: #f0a640;
+    --warn-soft: rgba(240, 166, 64, 0.14);
+    --chart-2: #b5835a;
+    --sidebar: #0e0e0d;
+    --sidebar-border: rgba(255, 255, 255, 0.08);
+    --shadow: none;
+    --shadow-raised: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -111,19 +118,21 @@
   --color-danger-soft: var(--danger-soft);
   --color-warn: var(--warn);
   --color-warn-soft: var(--warn-soft);
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", var(--font-inter), "Segoe UI", system-ui, sans-serif;
+  --color-primary: var(--primary);
+  --color-primary-ink: var(--primary-ink);
+  --font-sans: var(--font-geist), "Segoe UI", system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Consolas, monospace;
 }
 
 body {
-  background: var(--bg-glow), var(--bg);
-  background-attachment: fixed;
+  background: var(--bg);
   min-height: 100vh;
   color: var(--ink);
-  letter-spacing: -0.01em;
+  font-feature-settings: "cv11", "ss01";
   -webkit-font-smoothing: antialiased;
 }
 
-/* Smala, diskreta rullningslister som i macOS */
+/* Smala, diskreta rullningslister */
 * {
   scrollbar-width: thin;
   scrollbar-color: rgba(128, 128, 128, 0.35) transparent;
@@ -140,33 +149,42 @@ body {
     white-space: nowrap;
   }
   .card {
-    @apply rounded-2xl bg-surface;
+    @apply rounded-xl bg-surface;
     border: 1px solid var(--card-border);
     box-shadow: var(--shadow);
   }
+  /* Nyckeltal i en sammanhållen panel, åtskilda av hårfina linjer */
+  .stat-group {
+    @apply gap-px overflow-hidden rounded-xl;
+    background: var(--card-border);
+    border: 1px solid var(--card-border);
+  }
   .input {
-    @apply w-full rounded-[10px] border border-[var(--input-border)] bg-surface-2 px-3 py-2 text-[15px] text-ink outline-none transition placeholder:text-muted/70 focus:border-brand focus:bg-surface focus:ring-4 focus:ring-brand/20;
+    @apply w-full rounded-lg border border-[var(--input-border)] bg-surface px-3 py-2 text-[14px] text-ink outline-none transition placeholder:text-muted/70 focus:border-brand focus:ring-3 focus:ring-brand/15;
   }
   .label {
-    @apply mb-1.5 block text-[13px] font-medium text-muted;
+    @apply mb-1.5 block text-[13px] font-medium text-ink/80;
   }
   .btn-primary {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-brand px-4 py-2 text-[15px] font-medium text-brand-ink transition hover:brightness-110 active:scale-[0.98] disabled:opacity-50;
+    @apply inline-flex h-9 cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary px-3.5 text-[14px] font-medium text-primary-ink transition hover:opacity-85 active:translate-y-px disabled:opacity-50;
   }
   .btn-secondary {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-fill px-4 py-2 text-[15px] font-medium text-ink transition hover:bg-fill-hover active:scale-[0.98] disabled:opacity-50;
+    @apply inline-flex h-9 cursor-pointer items-center justify-center gap-2 rounded-lg border border-[var(--input-border)] bg-surface px-3.5 text-[14px] font-medium text-ink transition hover:bg-surface-2 active:translate-y-px disabled:opacity-50;
   }
   .btn-danger {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-fill px-4 py-2 text-[15px] font-medium text-danger transition hover:bg-danger-soft active:scale-[0.98] disabled:opacity-50;
+    @apply inline-flex h-9 cursor-pointer items-center justify-center gap-2 rounded-lg border border-[var(--input-border)] bg-surface px-3.5 text-[14px] font-medium text-danger transition hover:border-danger/40 hover:bg-danger-soft active:translate-y-px disabled:opacity-50;
   }
   .table {
     @apply w-full text-[14px];
   }
   .table th {
-    @apply px-4 py-2.5 text-left text-[12px] font-medium text-muted;
+    @apply border-b border-line px-4 py-2.5 text-left text-[12px] font-medium text-muted;
   }
   .table td {
     @apply border-t border-line px-4 py-3;
+  }
+  .table tbody tr:first-child td {
+    @apply border-t-0;
   }
   .table tbody tr {
     @apply transition-colors;
@@ -185,12 +203,12 @@ body {
   .table-edit tbody tr:hover {
     background: transparent;
   }
-  /* Segmenterad kontroll (iOS/macOS) */
+  /* Segmenterad kontroll */
   .segmented {
-    @apply inline-flex max-w-full gap-0.5 overflow-x-auto rounded-[10px] bg-fill p-0.5;
+    @apply inline-flex max-w-full gap-0.5 overflow-x-auto rounded-lg bg-fill p-0.5;
   }
   .segmented > * {
-    @apply whitespace-nowrap rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium text-ink/80 transition;
+    @apply whitespace-nowrap rounded-md px-3 py-1.5 text-[13px] font-medium text-muted transition hover:text-ink;
   }
   .segmented > [aria-current="page"] {
     @apply bg-surface text-ink;

@@ -39,7 +39,7 @@ export default async function Invoices({ searchParams }: { searchParams: SP }) {
           </>
         } />
       <Flash error={error} notice={notice} />
-      <div className="mb-6 grid gap-3 sm:grid-cols-3">
+      <div className="stat-group mb-6 grid sm:grid-cols-3">
         <Stat label="Obetalt (inkl. moms)" value={kr(sum(["sent", "overdue"]))} />
         <Stat label="Förfallet (inkl. moms)" value={kr(sum(["overdue"]))} tone={sum(["overdue"]) ? "danger" : undefined} />
         <Stat label="Betalt i år (inkl. moms)" value={kr(rows.filter((r) => r.status === "paid" && r.paidDate && r.paidDate.getUTCFullYear() === new Date().getUTCFullYear()).reduce((a, r) => a + r.total, 0))} tone="success" />

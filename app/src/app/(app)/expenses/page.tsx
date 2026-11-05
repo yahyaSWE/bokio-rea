@@ -22,7 +22,7 @@ export default async function Expenses({ searchParams }: { searchParams: SP }) {
     <>
       <PageHeader title="Utlägg" subtitle="När någon betalat för företaget med egna pengar" />
       <Flash error={error} notice={notice} />
-      <div className="mb-6 grid gap-3 sm:grid-cols-3">
+      <div className="stat-group mb-6 grid sm:grid-cols-3">
         <Stat label="Att bokföra" value={kr(pending.reduce((s, e) => s + e.amount, 0))} hint={`${pending.length} st`} tone={pending.length ? "warn" : undefined} />
         <Stat label="Att betala ut" value={kr(unpaid.reduce((s, e) => s + e.amount, 0))} hint={`${unpaid.length} st`} />
         <Stat label="Utbetalt" value={kr(paid.reduce((s, e) => s + e.amount, 0))} hint={`${paid.length} st`} tone="brand" />

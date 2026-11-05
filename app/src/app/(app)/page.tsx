@@ -79,8 +79,8 @@ export default async function Dashboard({ searchParams }: { searchParams: SP }) 
       />
 
       <Flash notice={notice} />
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <Stat label="Årets resultat" value={kr(result)} tone={result < 0 ? "danger" : "success"} />
+      <div className="stat-group grid sm:grid-cols-2 xl:grid-cols-4">
+        <Stat label="Årets resultat" value={kr(result)} tone={result < 0 ? "danger" : undefined} />
         <Stat label="Saldo bank och kassa" value={kr(bank)} hint="Enligt bokföringen (19xx)" />
         <Stat label="Obetalda kundfakturor" value={kr(unpaid)} hint={overdue ? `varav förfallet ${kr(overdue)}` : "Inget förfallet"} tone={overdue ? "warn" : undefined} />
         <Stat
@@ -92,10 +92,10 @@ export default async function Dashboard({ searchParams }: { searchParams: SP }) 
 
       <div className="mt-6 grid gap-6 xl:grid-cols-3">
         <Card title="Inkomster och kostnader, senaste 12 månaderna" className="xl:col-span-2">
-          <div className="p-4">
-            <div className="mb-3 flex flex-wrap gap-4 text-sm">
-              <span>Inkomster <strong className="tabular-nums">{kr(income12, { decimals: false })}</strong></span>
-              <span>Kostnader <strong className="tabular-nums">{kr(cost12, { decimals: false })}</strong></span>
+          <div className="p-5">
+            <div className="mb-4 flex flex-wrap gap-8">
+              <span className="text-[13px] text-muted">Inkomster<strong className="mt-0.5 block text-[18px] font-medium tabular-nums tracking-[-0.02em] text-ink">{kr(income12, { decimals: false })}</strong></span>
+              <span className="text-[13px] text-muted">Kostnader<strong className="mt-0.5 block text-[18px] font-medium tabular-nums tracking-[-0.02em] text-ink">{kr(cost12, { decimals: false })}</strong></span>
             </div>
             <BarChart data={months.map((m) => ({ label: m.label, a: m.income / 100, b: m.cost / 100 }))} aLabel="Inkomster" bLabel="Kostnader" />
           </div>
@@ -103,14 +103,14 @@ export default async function Dashboard({ searchParams }: { searchParams: SP }) 
 
         <Card title="Att göra">
           {todos.length === 0 ? (
-            <p className="p-4 text-sm text-muted">Allt är bokfört. Snyggt!</p>
+            <p className="px-5 py-4 text-sm text-muted">Inget att göra just nu.</p>
           ) : (
             <ul className="divide-y divide-line">
               {todos.map((t) => (
                 <li key={t.href}>
-                  <Link href={t.href} className="flex items-center justify-between px-4 py-3 text-sm hover:bg-surface-2">
+                  <Link href={t.href} className="group flex items-center justify-between px-5 py-3 text-sm hover:bg-surface-2">
                     {t.text}
-                    <span className="text-muted">→</span>
+                    <span className="text-muted transition group-hover:translate-x-0.5 group-hover:text-ink">→</span>
                   </Link>
                 </li>
               ))}
@@ -118,19 +118,19 @@ export default async function Dashboard({ searchParams }: { searchParams: SP }) 
           )}
         </Card>
 
-        <Card title="Topp 5 kostnader, senaste 12 månaderna" className="xl:col-span-2" action={<Link href="/reports/result" className="text-sm text-brand">Resultatrapport</Link>}>
+        <Card title="Största kostnader, senaste 12 månaderna" className="xl:col-span-2" action={<Link href="/reports/result" className="text-[13px] text-muted hover:text-ink">Resultatrapport →</Link>}>
           {topCosts.length === 0 ? (
-            <p className="p-4 text-sm text-muted">Inga kostnader bokförda ännu.</p>
+            <p className="px-5 py-4 text-sm text-muted">Inga kostnader bokförda ännu.</p>
           ) : (
-            <ul className="space-y-3 p-4">
+            <ul className="space-y-3.5 p-5">
               {topCosts.map(([name, v]) => (
                 <li key={name} className="text-sm">
                   <div className="flex justify-between gap-3">
                     <span className="truncate">{name}</span>
                     <span className="tabular-nums">{kr(v, { decimals: false })}</span>
                   </div>
-                  <div className="mt-1 h-1.5 rounded-full bg-fill">
-                    <div className="h-1.5 rounded-full bg-brand" style={{ width: `${(v / topCosts[0][1]) * 100}%` }} />
+                  <div className="mt-1.5 h-1 rounded-full bg-fill">
+                    <div className="h-1 rounded-full bg-ink/70" style={{ width: `${(v / topCosts[0][1]) * 100}%` }} />
                   </div>
                 </li>
               ))}
@@ -139,12 +139,21 @@ export default async function Dashboard({ searchParams }: { searchParams: SP }) 
         </Card>
 
         <Card title="Snabbval">
-          <div className="grid gap-2 p-4">
-            <Link href="/verifications/new" className="btn-secondary justify-start">Nytt verifikat</Link>
-            <Link href="/expenses" className="btn-secondary justify-start">Registrera utlägg</Link>
-            <Link href="/vat" className="btn-secondary justify-start">Momsredovisning</Link>
-            <Link href="/reports/balance" className="btn-secondary justify-start">Balansrapport</Link>
-          </div>
+          <ul className="divide-y divide-line">
+            {[
+              ["/verifications/new", "Nytt verifikat"],
+              ["/expenses", "Registrera utlägg"],
+              ["/vat", "Momsredovisning"],
+              ["/reports/balance", "Balansrapport"],
+            ].map(([href, text]) => (
+              <li key={href}>
+                <Link href={href} className="group flex items-center justify-between px-5 py-3 text-sm hover:bg-surface-2">
+                  {text}
+                  <span className="text-muted transition group-hover:translate-x-0.5 group-hover:text-ink">→</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </Card>
       </div>
     </>
